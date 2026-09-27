@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOVE PROFILE</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html,body{
+    width:100%;
+    min-height:100%;
+}
+
+body{
+    background:#08090c;
+    color:#f4f1ec;
+    font-family:Arial,"Microsoft YaHei",sans-serif;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at 15% 15%,rgba(150,35,55,.18),transparent 32%),
+        radial-gradient(circle at 85% 80%,rgba(180,180,190,.08),transparent 30%);
+}
+
+/* 页面 */
+
+.screen{
+    position:relative;
+    z-index:1;
+    width:100%;
+    min-height:100vh;
+    display:none;
+}
+
+.screen.active{
+    display:flex;
+}
+
+
+/* =========================
+   密码页面
+========================= */
+
+#passwordPage{
+    min-height:100vh;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+}
+
+.password-box{
+    position:relative;
+    z-index:10;
+    width:min(430px,100%);
+    padding:55px 28px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,.14);
+    background:rgba(12,13,17,.96);
+    box-shadow:0 30px 100px rgba(0,0,0,.7);
+}
+
+.archive{
+    color:#777a82;
+    font-size:11px;
+    letter-spacing:5px;
+    margin-bottom:28px;
+}
+
+.heart{
+    width:62px;
+    height:62px;
+    margin:0 auto 24px;
+    border:1px solid rgba(255,255,255,.22);
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+}
+
+.password-box h1{
+    font-family:Georgia,"Microsoft YaHei",serif;
+    font-weight:400;
+    font-size:34px;
+    letter-spacing:3px;
+}
+
+.sub{
+    color:#858890;
+    font-size:11px;
+    letter-spacing:3px;
+    margin:12px 0 32px;
+}
+
+
+/* 重点：输入框 */
+
+#codeInput{
+    position:relative;
+    z-index:20;
+
+    display:block;
+
+    width:100%;
+    height:56px;
+
+    padding:0 15px;
+
+    border:1px solid rgba(255,255,255,.25);
+    border-radius:0;
+
+    outline:none;
+
+    background:#15161b !important;
+    color:#ffffff !important;
+
+    font-size:22px;
+    text-align:center;
+    letter-spacing:10px;
+
+    -webkit-appearance:none;
+    appearance:none;
+
+    pointer-events:auto;
+    user-select:text;
+    -webkit-user-select:text;
+}
+
+#codeInput::placeholder{
+    color:#555861;
+    opacity:1;
+}
+
+#codeInput:focus{
+    border-color:#bd5363;
+    background:#18191f !important;
+    box-shadow:0 0 20px rgba(189,83,99,.12);
+}
+
+
+.enter-btn{
+    position:relative;
+    z-index:20;
+
+    width:100%;
+    height:55px;
+
+    margin-top:14px;
+
+    border:none;
+
+    background:#eeeae5;
+    color:#111;
+
+    font-size:13px;
+    letter-spacing:5px;
+
+    cursor:pointer;
+
+    pointer-events:auto;
+
+    transition:.25s;
+}
+
+.enter-btn:active{
+    transform:scale(.98);
+}
+
+.enter-btn:hover{
+    background:#fff;
+}
+
+.error{
+    min-height:22px;
+    margin-top:13px;
+    color:#c45b69;
+    font-size:12px;
+}
+
+
+/* =========================
+   首页
+========================= */
+
+#introPage{
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+}
+
+.intro{
+    width:min(750px,100%);
+    text-align:center;
+}
+
+.eyebrow{
+    color:#777a82;
+    font-size:11px;
+    letter-spacing:6px;
+    margin-bottom:22px;
+}
+
+.intro h1{
+    font-family:Georgia,"Microsoft YaHei",serif;
+    font-size:clamp(45px,8vw,78px);
+    font-weight:400;
+    line-height:1.1;
+    letter-spacing:5px;
+}
+
+.intro h1 span{
+    color:#a63e4d;
+}
+
+.line{
+    width:70px;
+    height:1px;
+    margin:30px auto;
+    background:rgba(255,255,255,.3);
+}
+
+.intro p{
+    max-width:540px;
+    margin:auto;
+    color:#9699a1;
+    font-size:13px;
+    line-height:2.1;
+}
+
+.start-btn{
+    margin-top:40px;
+    padding:16px 55px;
+    background:transparent;
+    border:1px solid rgba(255,255,255,.28);
+    color:#eee;
+    font-family:inherit;
+    letter-spacing:4px;
+    cursor:pointer;
+}
+
+.start-btn:hover{
+    border-color:#a63e4d;
+    background:rgba(140,40,55,.12);
+}
+
+
+/* =========================
+   测试页面
+========================= */
+
+#quizPage{
+    flex-direction:column;
+    align-items:center;
+    padding:35px 20px 60px;
+}
+
+.quiz-wrap{
+    width:min(720px,100%);
+}
+
+.quiz-head{
+    display:flex;
+    justify-content:space-between;
+    color:#777a82;
+    font-size:11px;
+    letter-spacing:2px;
+}
+
+.progress{
+    width:100%;
+    height:2px;
+    margin-top:12px;
+    margin-bottom:45px;
+    background:rgba(255,255,255,.1);
+}
+
+.progress-bar{
+    width:0;
+    height:100%;
+    background:#a63e4d;
+    transition:.3s;
+}
+
+.question-number{
+    color:#777a82;
+    font-family:Georgia,serif;
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.question{
+    font-size:25px;
+    line-height:1.7;
+    margin-bottom:32px;
+}
+
+.answers{
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+}
+
+.answer{
+    position:relative;
+    padding:17px 20px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.025);
+    color:#c5c6ca;
+    font-size:14px;
+    line-height:1.6;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.answer:hover{
+    border-color:#91404d;
+    transform:translateX(3px);
+}
+
+.answer.selected{
+    color:white;
+    border-color:#a63e4d;
+    background:rgba(145,48,64,.16);
+}
+
+.answer.selected::after{
+    content:"";
+    position:absolute;
+    width:6px;
+    height:6px;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+    border-radius:50%;
+    background:#c45b69;
+}
+
+.buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+}
+
+.nav{
+    padding:12px 25px;
+    border:1px solid rgba(255,255,255,.15);
+    background:transparent;
+    color:#aaa;
+    cursor:pointer;
+}
+
+.nav.next{
+    background:#eeeae5;
+    color:#111;
+}
+
+.nav:disabled{
+    opacity:.25;
+}
+
+
+/* =========================
+   结果
+========================= */
+
+#resultPage{
+    justify-content:center;
+    padding:30px 15px 60px;
+}
+
+.result{
+    position:relative;
+    width:min(820px,100%);
+    padding:50px 42px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(14,15,19,.95);
+    box-shadow:0 30px 100px rgba(0,0,0,.7);
+}
+
+.result::before{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    right:-150px;
+    top:-150px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:50%;
+}
+
+.label{
+    color:#777a82;
+    font-size:11px;
+    letter-spacing:5px;
+}
+
+.result h2{
+    position:relative;
+    font-family:Georgia,"Microsoft YaHei",serif;
+    font-size:58px;
+    font-weight:400;
+    margin-top:12px;
+}
+
+.result-en{
+    color:#a63e4d;
+    letter-spacing:4px;
+    margin-top:5px;
+}
+
+.result-line{
+    width:100%;
+    height:1px;
+    background:rgba(255,255,255,.1);
+    margin:32px 0;
+}
+
+.description{
+    color:#bcbec4;
+    line-height:2;
+    font-size:14px;
+}
+
+.profile-title{
+    color:#777a82;
+    font-size:11px;
+    letter-spacing:4px;
+    margin-top:35px;
+    margin-bottom:20px;
+}
+
+.bar-row{
+    margin-bottom:15px;
+}
+
+.bar-head{
+    display:flex;
+    justify-content:space-between;
+    color:#aaa;
+    font-size:12px;
+    margin-bottom:6px;
+}
+
+.bar{
+    width:100%;
+    height:3px;
+    background:rgba(255,255,255,.08);
+}
+
+.bar-inner{
+    height:100%;
+    background:#a63e4d;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:25px;
+}
+
+.tag{
+    padding:7px 13px;
+    border:1px solid rgba(255,255,255,.12);
+    color:#aaa;
+    font-size:11px;
+}
+
+.section{
+    margin-top:35px;
+}
+
+.section h3{
+    font-size:13px;
+    letter-spacing:3px;
+    margin-bottom:12px;
+    font-weight:400;
+}
+
+.section p{
+    color:#9699a1;
+    font-size:13px;
+    line-height:2;
+}
+
+.quote{
+    margin-top:35px;
+    padding:23px;
+    border-left:1px solid #a63e4d;
+    background:rgba(255,255,255,.025);
+    color:#c7c8cc;
+    line-height:1.8;
+    font-family:Georgia,"Microsoft YaHei",serif;
+    font-size:17px;
+}
+
+.restart{
+    display:block;
+    margin:40px auto 0;
+    padding:14px 45px;
+    border:0;
+    background:#eeeae5;
+    color:#111;
+    letter-spacing:4px;
+    cursor:pointer;
+}
+
+
+/* 手机 */
+
+@media(max-width:600px){
+
+    .password-box{
+        padding:45px 20px;
+    }
+
+    .password-box h1{
+        font-size:29px;
+    }
+
+    .intro h1{
+        font-size:44px;
+        letter-spacing:3px;
+    }
+
+    .question{
+        font-size:21px;
+    }
+
+    .answer{
+        padding:15px;
+        font-size:13px;
+    }
+
+    .result{
+        padding:40px 22px;
+    }
+
+    .result h2{
+        font-size:45px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- =========================
+     密码
+========================= -->
+
+<section id="passwordPage" class="screen active">
+
+    <div class="password-box">
+
+        <div class="archive">
+            LOVE ARCHIVE · 001
+        </div>
+
+        <div class="heart">
+            ♡
+        </div>
+
+        <h1>
+            恋爱人格测试
+        </h1>
+
+        <div class="sub">
+            ENTER ACCESS CODE
+        </div>
+
+        <input
+            id="codeInput"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            maxlength="4"
+            placeholder="••••"
+        >
+
+        <button
+            type="button"
+            class="enter-btn"
+            id="enterBtn">
+            进入档案
+        </button>
+
+        <div
+            id="error"
+            class="error">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     首页
+========================= -->
+
+<section id="introPage" class="screen">
+
+    <div class="intro">
+
+        <div class="eyebrow">
+            LOVE PROFILE / PERSONALITY ARCHIVE
+        </div>
+
+        <h1>
+            你究竟是<br>
+            哪一种<span>恋人</span>？
+        </h1>
+
+        <div class="line"></div>
+
+        <p>
+            爱一个人的方式，
+            往往比“喜欢谁”更能说明你是谁。
+            <br><br>
+            18 道问题，从你的心动方式、
+            情绪反应、依恋模式与边界感，
+            找到最接近你的恋爱人格。
+        </p>
+
+        <button
+            type="button"
+            class="start-btn"
+            onclick="startQuiz()">
+            开始测试
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     测试
+========================= -->
+
+<section id="quizPage" class="screen">
+
+    <div class="quiz-wrap">
+
+        <div class="quiz-head">
+            <span>LOVE PROFILE</span>
+            <span id="count">01 / 18</span>
+        </div>
+
+        <div class="progress">
+            <div
+                id="progressBar"
+                class="progress-bar">
+            </div>
+        </div>
+
+        <div id="questionBox"></div>
+
+        <div class="buttons">
+
+            <button
+                id="prevBtn"
+                class="nav"
+                type="button"
+                onclick="prevQuestion()">
+                上一题
+            </button>
+
+            <button
+                id="nextBtn"
+                class="nav next"
+                type="button"
+                onclick="nextQuestion()">
+                下一题
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     结果
+========================= -->
+
+<section id="resultPage" class="screen">
+
+    <div class="result">
+
+        <div class="label">
+            YOUR LOVE PROFILE
+        </div>
+
+        <h2 id="resultType"></h2>
+
+        <div
+            class="result-en"
+            id="resultEn">
+        </div>
+
+        <div class="result-line"></div>
+
+        <div
+            class="description"
+            id="resultDesc">
+        </div>
+
+        <div class="profile-title">
+            CORE ATTRIBUTES
+        </div>
+
+        <div id="profileBars"></div>
+
+        <div
+            class="tags"
+            id="traits">
+        </div>
+
+        <div class="section">
+            <h3>你的恋爱方式</h3>
+            <p id="loveStyle"></p>
+        </div>
+
+        <div class="section">
+            <h3>你容易心动的瞬间</h3>
+            <p id="heartBeat"></p>
+        </div>
+
+        <div class="section">
+            <h3>关系中的你</h3>
+            <p id="relationship"></p>
+        </div>
+
+        <div class="section">
+            <h3>你的隐藏属性</h3>
+            <p id="hidden"></p>
+        </div>
+
+        <div
+            class="quote"
+            id="quote">
+        </div>
+
+        <button
+            class="restart"
+            type="button"
+            onclick="restartTest()">
+            重新测试
+        </button>
+
+    </div>
+
+</section>
+<script>
+
+/* =========================
+   提取码
+========================= */
+
+const ACCESS_CODE = "0101";
+
+
+const codeInput =
+    document.getElementById("codeInput");
+
+const enterBtn =
+    document.getElementById("enterBtn");
+
+const error =
+    document.getElementById("error");
+
+
+function checkCode(){
+
+    const value =
+        codeInput.value.trim();
+
+    if(value === ACCESS_CODE){
+
+        error.textContent = "";
+
+        showPage("introPage");
+
+    }else{
+
+        error.textContent =
+            "提取码错误，请重新输入";
+
+        codeInput.value = "";
+
+        codeInput.focus();
+
+    }
+}
+
+
+enterBtn.addEventListener(
+    "click",
+    checkCode
+);
+
+
+codeInput.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Enter"){
+            checkCode();
+        }
+
+    }
+);
+
+
+/* =========================
+   题目
+========================= */
+
+const questions = [
+
+{
+q:"如果你喜欢上一个人，你最可能先做什么？",
+a:[
+"主动制造机会接近她",
+"偷偷观察她很久",
+"找共同话题慢慢靠近",
+"装作不在意，其实一直关注",
+"先确认她是否也有好感",
+"忍不住频繁找她聊天"
+]
+},
+
+{
+q:"对方突然一天没有联系你，你会？",
+a:[
+"直接问她发生了什么",
+"表面没事，心里想很多",
+"等她忙完再联系",
+"告诉自己不要多想",
+"回想最近是不是哪里做错了",
+"忍不住一直看手机"
+]
+},
+
+{
+q:"恋爱中你最需要的是？",
+a:[
+"明确的偏爱",
+"安全感",
+"自由空间",
+"稳定陪伴",
+"精神上的理解",
+"热烈回应"
+]
+},
+
+{
+q:"喜欢的人和别人走得很近，你会？",
+a:[
+"明显吃醋",
+"安静观察",
+"直接询问",
+"告诉自己尊重她",
+"分析两个人的关系",
+"嘴上说没事，心里很酸"
+]
+},
+
+{
+q:"吵架以后，你更倾向于？",
+a:[
+"马上解决",
+"先冷静",
+"主动低头",
+"等对方来找",
+"把问题彻底讲清楚",
+"生气却舍不得离开"
+]
+},
+
+{
+q:"你觉得最浪漫的事情是？",
+a:[
+"对方坚定选择你",
+"记得你随口说过的小事",
+"陪你度过普通的一天",
+"在你需要时出现",
+"愿意认真听你说话",
+"准备一个惊喜"
+]
+},
+
+{
+q:"你最容易因为什么瞬间心动？",
+a:[
+"她坚定有力量的时候",
+"她温柔对待别人时",
+"她认真听你说话时",
+"她偶然露出脆弱时",
+"和你产生精神共鸣时",
+"明显偏爱你时"
+]
+},
+
+{
+q:"在关系里你更像？",
+a:[
+"主动付出的人",
+"默默观察的人",
+"负责照顾的人",
+"需要独处的人",
+"解决问题的人",
+"制造快乐的人"
+]
+},
+
+{
+q:"恋人说‘我需要一点空间’，你会？",
+a:[
+"不舍但尊重",
+"开始怀疑是不是不爱了",
+"给空间但保持联系",
+"自己也去做自己的事",
+"询问她具体需要什么",
+"表面答应，心里很失落"
+]
+},
+
+{
+q:"最不能接受恋爱中的什么？",
+a:[
+"忽冷忽热",
+"欺骗",
+"控制",
+"冷暴力",
+"不沟通",
+"不被重视"
+]
+},
+
+{
+q:"恋人忘记重要纪念日，你会？",
+a:[
+"嘴上说没关系",
+"明显失落",
+"直接说自己很在意",
+"自己消化",
+"想知道为什么忘了",
+"故意逗她，其实很委屈"
+]
+},
+
+{
+q:"你喜欢怎样的告白？",
+a:[
+"简单直接",
+"认真准备很久",
+"自然发生",
+"只有彼此知道",
+"认真谈未来",
+"浪漫有仪式感"
+]
+},
+
+{
+q:"如果确定对方不喜欢你，你会？",
+a:[
+"果断退出",
+"再争取一次",
+"继续做朋友",
+"慢慢离开",
+"分析自己为什么喜欢她",
+"难过但希望她幸福"
+]
+},
+
+{
+q:"你最容易因为什么心软？",
+a:[
+"认真道歉",
+"突然抱住你",
+"说害怕失去你",
+"默默为你做小事",
+"愿意认真沟通",
+"撒娇突然变黏"
+]
+},
+
+{
+q:"你更相信哪一种爱情？",
+a:[
+"轰轰烈烈",
+"细水长流",
+"彼此成长",
+"灵魂契合",
+"相互尊重",
+"坚定选择"
+]
+},
+
+{
+q:"真正爱上一个人后，你最大的变化？",
+a:[
+"变得主动",
+"变得敏感",
+"变得有耐心",
+"愿意分享生活",
+"开始规划未来",
+"不自觉变黏"
+]
+},
+
+{
+q:"恋人遇到困难，你会？",
+a:[
+"第一时间赶过去",
+"陪她慢慢解决",
+"帮她寻找办法",
+"给她需要的空间",
+"陪她分析问题",
+"先抱住她再说"
+]
+},
+
+{
+q:"用一句话形容你的爱情？",
+a:[
+"喜欢就要认真争取。",
+"我嘴上没说，其实很在乎。",
+"爱一个人就是想让她过得更好。",
+"我爱你，但我也需要成为自己。",
+"真正的爱情应该让彼此变得更好。",
+"如果是你，我可以一直黏着你。"
+]
+}
+
+];
+
+
+/* =========================
+   12种人格
+========================= */
+
+const results = [
+
+{
+type:"月光型恋人",
+en:"MOONLIGHT LOVER",
+desc:"你属于慢热而细腻的恋人。你很少因为一个人的外表就彻底心动，真正让你陷进去的，往往是那些别人不容易注意到的细节。",
+loveStyle:"你不会一开始就把全部情绪交出去。你会观察、确认、试探，然后一点一点靠近。一旦真正确定关系，你的感情会非常稳定。",
+heartBeat:"对方记得你随口说过的一句话，或者在你没有注意的时候默默照顾你，都很容易让你产生很深的心动。",
+relationship:"你需要安全感，也需要确定自己是被认真选择的。你不太喜欢模糊不清的关系。",
+hidden:"你其实非常容易吃醋，只是很擅长把情绪藏起来。",
+quote:"“月亮不会催促夜晚，但它一直在那里。”",
+traits:["慢热","细腻","长情","敏感"],
+bars:[82,67,94,88]
+},
+
+{
+type:"玫瑰型恋人",
+en:"ROSE LOVER",
+desc:"你对爱情拥有非常强烈的感受力。喜欢就是喜欢，你很难把感情完全变成理性的计算。",
+loveStyle:"你愿意付出，也愿意制造仪式感。你喜欢被明确地爱，也希望自己的认真得到同样热烈的回应。",
+heartBeat:"一句坚定的偏爱、一个认真准备的惊喜，甚至只是对方在人群中第一眼寻找你，都很容易击中你。",
+relationship:"你需要明确的回应。暧昧太久会让你越来越没有安全感。",
+hidden:"你看起来很会撒娇，其实最害怕的是自己的真心被轻视。",
+quote:"“我想要的不是很多人喜欢，而是一个人坚定地选择我。”",
+traits:["浪漫","热烈","感性","仪式感"],
+bars:[94,89,91,76]
+},
+
+{
+type:"猎人型恋人",
+en:"HUNTER LOVER",
+desc:"你在爱情里拥有很强的主动性。喜欢一个人以后，你很少愿意坐在那里等待。",
+loveStyle:"你喜欢主动创造机会、主动表达，也享受两个人从陌生到靠近的过程。",
+heartBeat:"对方突然给你回应，或者在你以为没有希望的时候主动向你走来，会让你特别心动。",
+relationship:"你喜欢有来有往的关系。如果永远只有你一个人在主动，你很快就会失去耐心。",
+hidden:"你真正害怕的不是被拒绝，而是自己的认真没有得到回应。",
+quote:"“喜欢一个人，就去见她。”",
+traits:["主动","果断","热烈","行动派"],
+bars:[96,94,75,72]
+},
+
+{
+type:"骑士型恋人",
+en:"KNIGHT LOVER",
+desc:"你是典型的守护型恋人。你表达爱意的方式往往不是甜言蜜语，而是出现在对方真正需要你的时候。",
+loveStyle:"你会自然照顾对方，记住她的习惯，也会在她遇到困难的时候第一时间站出来。",
+heartBeat:"对方在脆弱的时候愿意依赖你，会让你产生很强的保护欲。",
+relationship:"你愿意承担很多，但也容易把自己放在关系里太靠后。",
+hidden:"其实你也很希望有人能照顾你，只是你很少主动说。",
+quote:"“我不怕麻烦，我只是希望你不要一个人扛。”",
+traits:["守护","责任感","可靠","耐心"],
+bars:[87,79,97,81]
+},
+
+{
+type:"狐狸型恋人",
+en:"FOX LOVER",
+desc:"你是很难被真正看透的恋人。你不会轻易相信一段关系，也不会轻易把自己的底牌交出去。",
+loveStyle:"你喜欢观察和试探。对方的一句话、一个眼神甚至一次态度变化，都可能被你记在心里。",
+heartBeat:"真正懂你、又不会强迫你的人，很容易让你慢慢卸下防备。",
+relationship:"你非常重视边界。你需要亲密，却不喜欢失去自己的空间。",
+hidden:"你比表面看起来更黏人，只是只对真正信任的人。",
+quote:"“你以为我不在意，其实我只是没有说。”",
+traits:["神秘","聪明","观察","边界感"],
+bars:[84,87,92,98]
+},
+
+{
+type:"猫系恋人",
+en:"CAT LOVER",
+desc:"你是典型的外冷内热型。刚认识的时候可能显得有些疏离，但真正熟悉以后，你会展现完全不同的一面。",
+loveStyle:"你不太喜欢过度直白的表达，但会通过一些小动作证明自己在乎。",
+heartBeat:"对方主动靠近你、记得你的习惯、给你足够安全感，会让你慢慢变得柔软。",
+relationship:"你需要亲密，也需要自己的空间。最舒服的状态是不用时时刻刻黏在一起，却始终知道彼此在。",
+hidden:"嘴上说‘随便’，其实很多事情你都有自己的答案。",
+quote:"“我不是不黏人，我只是不对所有人黏。”",
+traits:["慢热","傲娇","依赖","边界"],
+bars:[77,71,93,91]
+},
+
+{
+type:"小狗型恋人",
+en:"PUPPY LOVER",
+desc:"你是爱情里很容易让人感受到快乐的一类人。喜欢一个人以后，你会忍不住分享生活中的各种小事。",
+loveStyle:"你表达爱意非常直接。想见就见，想念就说，开心也希望对方第一时间知道。",
+heartBeat:"对方主动找你、夸你、突然抱住你，都会让你的心情迅速变好。",
+relationship:"你需要回应感。不是要求对方时时刻刻陪着你，而是希望自己发出的爱能被接住。",
+hidden:"你看起来没心没肺，其实非常害怕被冷落。",
+quote:"“今天发生了好多事，我第一个想告诉你。”",
+traits:["热情","直球","快乐","黏人"],
+bars:[91,93,86,69]
+},
+
+{
+type:"冰山型恋人",
+en:"ICEBERG LOVER",
+desc:"你不是没有感情，而是很少把感情摆在表面。你进入一段关系的门槛比较高，但真正进入以后，你会非常认真。",
+loveStyle:"你喜欢稳定、克制、有分寸的爱情。你不喜欢过度戏剧化，更相信时间能够证明感情。",
+heartBeat:"对方尊重你的沉默，却又能准确理解你真正想表达的东西，会让你非常心动。",
+relationship:"你需要大量的信任。只有确认对方不会轻易离开，你才会真正放松。",
+hidden:"你的心其实非常软，只是门锁得比较紧。",
+quote:"“不是所有的沉默都是冷漠。”",
+traits:["克制","理性","深情","慢热"],
+bars:[72,66,89,97]
+},
+
+{
+type:"蝴蝶型恋人",
+en:"BUTTERFLY LOVER",
+desc:"你喜欢爱情里的心动感，也喜欢生活本身的变化。你不喜欢被一段关系完全固定住。",
+loveStyle:"你喜欢一起体验新的东西，一起旅行、聊天、探索未知。",
+heartBeat:"突然发生的浪漫、意外的邀约、新鲜的体验，都很容易让你重新产生心动。",
+relationship:"你需要自由，也需要一个愿意和你一起成长的人。",
+hidden:"你不是不长情，只是你无法接受没有生命力的关系。",
+quote:"“我想爱你，也想和你一起看看更大的世界。”",
+traits:["自由","新鲜感","浪漫","好奇"],
+bars:[84,95,78,92]
+},
+
+{
+type:"海盐型恋人",
+en:"SEA SALT LOVER",
+desc:"你在爱情里非常清醒。你可以深爱一个人，但不会因此完全失去自己。",
+loveStyle:"你更喜欢成熟、平等的关系。你希望两个人互相支持，而不是互相消耗。",
+heartBeat:"对方尊重你的决定、认真听你说话，并且愿意和你并肩解决问题，会让你产生很强的好感。",
+relationship:"你不喜欢控制，也不喜欢被控制。平等是你非常重要的需求。",
+hidden:"你看起来很洒脱，但真正失去一个重要的人以后，你会比想象中更难放下。",
+quote:"“我爱你，但我不会弄丢自己。”",
+traits:["清醒","独立","平等","稳定"],
+bars:[90,83,86,95]
+},
+
+{
+type:"长情型恋人",
+en:"ETERNAL LOVER",
+desc:"你一旦真正喜欢一个人，就很难轻易改变。你的爱情不是来得最快的，但往往是最难彻底消失的。",
+loveStyle:"你愿意花很长时间经营关系。你记得很多过去的事情，也很重视共同经历。",
+heartBeat:"对方记得曾经一起经历过的事情，或者在多年以后仍然记得你的习惯，会让你非常感动。",
+relationship:"你非常重视承诺。对于你来说，爱不仅是心动，更是长期选择。",
+hidden:"你最大的弱点就是太容易念旧。",
+quote:"“有些人离开了很久，却还是住在心里。”",
+traits:["长情","念旧","专一","稳定"],
+bars:[92,75,98,86]
+},
+
+{
+type:"灵魂伴侣型恋人",
+en:"SOULMATE LOVER",
+desc:"你真正寻找的不是一个简单的恋爱对象，而是一个能够理解你内心世界的人。",
+loveStyle:"外表、条件和浪漫仪式都不是最重要的。真正让你留下来的，是精神上的共鸣。",
+heartBeat:"两个人聊到凌晨，却依然觉得有说不完的话，会让你产生非常强烈的连接感。",
+relationship:"你希望两个人既是恋人，也是朋友、伙伴和精神上的同盟。",
+hidden:"你很难接受浅层关系。一旦失望，你会迅速把自己的心收回来。",
+quote:"“我想要的不是有人爱我，而是有人真正懂我。”",
+traits:["共鸣","理解","深度","精神连接"],
+bars:[88,79,96,94]
+}
+
+];
+
+
+/* =========================
+   测试状态
+========================= */
+
+let current = 0;
+
+let answers =
+    new Array(questions.length).fill(null);
+
+
+/* =========================
+   页面切换
+========================= */
+
+function showPage(id){
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(page=>{
+            page.classList.remove("active");
+        });
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    window.scrollTo(0,0);
+}
+
+
+/* =========================
+   开始测试
+========================= */
+
+function startQuiz(){
+
+    current = 0;
+
+    answers =
+        new Array(questions.length).fill(null);
+
+    showPage("quizPage");
+
+    renderQuestion();
+}
+
+
+/* =========================
+   显示题目
+========================= */
+
+function renderQuestion(){
+
+    const q =
+        questions[current];
+
+    document.getElementById("count")
+        .textContent =
+        String(current+1).padStart(2,"0")
+        +" / "
+        +String(questions.length).padStart(2,"0");
+
+
+    document.getElementById("progressBar")
+        .style.width =
+        ((current+1)/questions.length*100)+"%";
+
+
+    const box =
+        document.getElementById("questionBox");
+
+
+    box.innerHTML = `
+
+        <div class="question-number">
+            QUESTION ${String(current+1).padStart(2,"0")}
+        </div>
+
+        <div class="question">
+            ${q.q}
+        </div>
+
+        <div class="answers">
+
+            ${q.a.map((item,index)=>`
+
+                <div
+                    class="answer ${
+                        answers[current] === index
+                        ? "selected"
+                        : ""
+                    }"
+                    onclick="selectAnswer(${index})">
+
+                    ${item}
+
+                </div>
+
+            `).join("")}
+
+        </div>
+
+    `;
+
+
+    document.getElementById("prevBtn")
+        .disabled = current === 0;
+
+
+    document.getElementById("nextBtn")
+        .textContent =
+        current === questions.length-1
+        ? "查看结果"
+        : "下一题";
+}
+
+
+/* =========================
+   选择答案
+========================= */
+
+function selectAnswer(index){
+
+    answers[current] = index;
+
+    renderQuestion();
+}
+
+
+/* =========================
+   下一题
+========================= */
+
+function nextQuestion(){
+
+    if(answers[current] === null){
+
+        alert("请选择一个答案");
+
+        return;
+    }
+
+
+    if(current < questions.length-1){
+
+        current++;
+
+        renderQuestion();
+
+    }else{
+
+        calculateResult();
+
+    }
+}
+
+
+/* =========================
+   上一题
+========================= */
+
+function prevQuestion(){
+
+    if(current > 0){
+
+        current--;
+
+        renderQuestion();
+
+    }
+}
+
+
+/* =========================
+   自动计分
+========================= */
+
+function calculateResult(){
+
+    const score =
+        new Array(12).fill(0);
+
+
+    const map = [
+
+        [2,0,5,7,11,6],
+        [7,4,0,5,11,6],
+        [1,10,8,5,11,6],
+        [2,4,3,9,0,5],
+        [2,7,3,4,10,6],
+        [1,0,5,3,11,6],
+        [3,4,11,1,10,0],
+        [2,4,3,9,11,6],
+        [7,1,5,9,4,6],
+        [4,7,9,3,10,1],
+        [0,1,2,3,4,5],
+        [2,1,5,10,11,6],
+        [7,0,10,3,4,1],
+        [3,1,5,11,4,6],
+        [2,10,9,11,4,1],
+        [2,7,5,10,4,6],
+        [3,5,2,9,4,6],
+        [2,7,10,11,4,1]
+
+    ];
+
+
+    answers.forEach((answer,i)=>{
+
+        const result =
+            map[i][answer];
+
+        score[result] += 5;
+
+        score[(result+1)%12] += 1;
+
+        score[(result+2)%12] += .5;
+
+    });
+
+
+    const max =
+        Math.max(...score);
+
+    const index =
+        score.indexOf(max);
+
+
+    showResult(index);
+}
+
+
+/* =========================
+   显示结果
+========================= */
+
+function showResult(index){
+
+    const result =
+        results[index];
+
+
+    document.getElementById("resultType")
+        .textContent = result.type;
+
+
+    document.getElementById("resultEn")
+        .textContent = result.en;
+
+
+    document.getElementById("resultDesc")
+        .textContent = result.desc;
+
+
+    document.getElementById("loveStyle")
+        .textContent = result.loveStyle;
+
+
+    document.getElementById("heartBeat")
+        .textContent = result.heartBeat;
+
+
+    document.getElementById("relationship")
+        .textContent = result.relationship;
+
+
+    document.getElementById("hidden")
+        .textContent = result.hidden;
+
+
+    document.getElementById("quote")
+        .textContent = result.quote;
+
+
+    const labels = [
+        "心动指数",
+        "主动程度",
+        "情绪浓度",
+        "边界意识"
+    ];
+
+
+    const bars =
+        document.getElementById("profileBars");
+
+
+    bars.innerHTML = "";
+
+
+    result.bars.forEach((value,i)=>{
+
+        bars.innerHTML += `
+
+            <div class="bar-row">
+
+                <div class="bar-head">
+
+                    <span>
+                        ${labels[i]}
+                    </span>
+
+                    <span>
+                        ${value}%
+                    </span>
+
+                </div>
+
+                <div class="bar">
+
+                    <div
+                        class="bar-inner"
+                        style="width:${value}%">
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+
+    document.getElementById("traits")
+        .innerHTML =
+        result.traits.map(item=>`
+            <span class="tag">
+                ${item}
+            </span>
+        `).join("");
+
+
+    showPage("resultPage");
+}
+
+
+/* =========================
+   重新测试
+========================= */
+
+function restartTest(){
+
+    current = 0;
+
+    answers =
+        new Array(questions.length).fill(null);
+
+    showPage("introPage");
+}
+
+</script>
+
+</body>
+</html>
